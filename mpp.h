@@ -52,8 +52,9 @@ extern "C" void distance(float *dr,float *dx,float *dy,float x1,float y1,
 
 //DM read in Pa0 
 extern "C" void get_parameters_file(int *maxnum,struct syssize *syssize,double *radius,
-			 int *runtime,double *runforce,double *density,
-			 double *dt,int *maxtime,int *writemovietime,double *period);
+				    int *runtime,double *runforce,double
+				    *density,double *pdensity, double *dt,
+				    int *maxtime,int *writemovietime,double *period);
 
 //DM start the simulation
 extern "C" void initialize(int *nV,struct vortex **vortex,struct syssize *syssize,

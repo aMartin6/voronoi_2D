@@ -204,13 +204,14 @@ void initialize(int *nV,struct vortex **vortex,struct syssize *syssize,
   int runtime;
   double runforce;
   double density;
+  double pdensity;
   //int i,j;
   //int maxcell;
   
   //if Pa0 do this
   //read in Pa0 file
-  get_parameters_file(&maxnum,syssize,&radius,&runtime,&runforce,&density,
-		      dt,maxtime,writemovietime,period);
+  get_parameters_file (&maxnum,syssize,&radius,&runtime,&runforce,&density,
+		       &pdensity,dt,maxtime,writemovietime,period);
 
   *nV = 0;
   *time=0;  //first frame is written at this time
@@ -245,8 +246,8 @@ void initialize(int *nV,struct vortex **vortex,struct syssize *syssize,
 //-----------------------------------------------------------------
 void get_parameters_file(int *maxnum,struct syssize *syssize,double *radius,
 			 int *runtime,double *runforce,double *density,
-			 double *dt,int *maxtime,int *writemovietime,
-			 double *period)
+			 double *pdensity, double *dt,int *maxtime,
+			 int *writemovietime,double *period)
 {
   FILE *in;
   char trash[120];
@@ -280,13 +281,19 @@ void get_parameters_file(int *maxnum,struct syssize *syssize,double *radius,
   //------------------------------------------------try opening Pa0
   if(read_Pa0){
 
-    if ( (fscanf(in,"%s %lf\n",trash,density)) != 2){
+    if ((fscanf(in,"%s %lf\n",trash,density)) != 2){
       printf("Density is: %lf\n",density);
       exit(-1);
     }
     printf("density is: %lf\n",density);
 
-    if ( (fscanf(in,"%s %lf\n",trash,&((*syssize).SX))) != 2){
+    if ((fscanf(in,"%s %lf\n",trash,pdensity)) != 2){
+      printf("Post Density is: %lf\n",pdensity);
+      exit(-1);
+    }
+    printf("post density is: %lf\n",pdensity);
+
+    if ((fscanf(in,"%s %lf\n",trash,&((*syssize).SX))) != 2){
       printf("Couldn't load SX!\n");
       exit(-1);
     }
